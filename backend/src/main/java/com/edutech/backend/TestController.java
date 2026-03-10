@@ -11,8 +11,4 @@ public class TestController {
         return "Hello! Backend is running :)";
     }
 
-    @GetMapping("/")
-    public String mainPage(){
-        return "This is the main root endpoint";
-    }
 }
