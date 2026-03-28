@@ -34,3 +34,5 @@ async function loadTopics() {
 }
 
 loadTopics();
+
+console.log("home.js loaded");
