@@ -1,14 +1,46 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Chiron+Hei+HK:ital,wght@0,200..900;1,200..900&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1 id="login-title">Loading...</h1>
-<p id="login-message">Loading...</p>
-<a href="index.html">Back to Home</a>
-
-<script src="./js/loadLoginPage.js"></script>
+    <!-- Login form -->
+    <div class="login-box">
+        <div class="login-header">
+            <header id="login-title">Loading...</header>   <!-- header ?? -->
+        </div>
+        <div class="input-box">
+            <input type="text" class="input-field" placeholder="Email" autocomplete="off" required>
+        </div>
+        <div class="input-box">
+            <input type="password" class="input-field" placeholder="Password" autocomplete="off" required>
+        </div>
+        <div class="forgot">
+            <section>
+                <input type="checkbox" id="check">
+                <label for="check">Remember me</label>
+            </section>
+            <section>
+                <a href="findaccount.html">Forgot password</a>
+            </section>
+        </div>
+        <div class="input-submit">
+            <button class="submit-btn" id="submit"></button>
+            <label for="submit">Sign in</label>
+        </div>
+        <div class="sign-up-link">
+            <p>Don't have account? <a href="#">Sign up</a></p>
+        </div>
+        <div class="back-to-home">
+            <p id="login-message">Loading...</p>
+            <a href="index.html">Back to Home</a>
+        </div>
+    </div>
+    <script src="./js/loadLoginPage.js"></script>
 </body>
 </html>

@@ -1,6 +1,12 @@
 *{
-    font-family: Arial;
+    font-family: Lexend;
     text-decoration: none;
+}
+.lexend-<uniquifier> {
+             font-family: "Lexend", sans-serif;
+             font-optical-sizing: auto;
+             font-weight: <weight>;
+             font-style: normal;
 }
 .navbar{
     background: white; padding-right: 15px; padding-left: 15px;
@@ -31,7 +37,7 @@ li{
     list-style: none; display: inline-block;
 }
 li a{
-    color: black; font-size: 20px; font-weight: bold; margin-right: 25px;
+    color: black; font-size: 20px; margin-right: 25px;
 }
 
 #login-button {
