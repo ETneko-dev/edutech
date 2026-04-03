@@ -9,7 +9,7 @@
              font-style: normal;
 }
 .navbar{
-    background: white; padding-right: 15px; padding-left: 15px;
+    background: #36ffc3; padding-right: 15px; padding-left: 15px;
 }
 .navdiv{
     display: flex;
@@ -41,7 +41,7 @@ li a{
 }
 
 #login-button {
-    background-color: #00dfa8;
+    background-color: #007154;
     color: white;
     padding: 8px 20px;
     border-radius: 5px;
@@ -49,5 +49,5 @@ li a{
     transition: background-color 0.3s ease;
 }
 #login-button:hover {
-    background-color: #00baac; /* Darker shade for hover effect */
+    background-color: #004a3d; /* Darker shade for hover effect */
 }
