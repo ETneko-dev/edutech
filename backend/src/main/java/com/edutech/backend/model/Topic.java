@@ -1,15 +1,24 @@
 package com.edutech.backend.model;
 
-public class Topic {
-    private final String id;
-    private final String name;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
-    public Topic(String id, String name){
+@Entity
+public class Topic {
+    @Id
+    private int id;
+
+    private String name;
+
+    protected Topic() {
+    }
+
+    public Topic(int id, String name){
         this.id = id;
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 

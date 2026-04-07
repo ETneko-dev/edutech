@@ -1,31 +1,28 @@
 package com.edutech.backend.service;
 
+import com.edutech.backend.JPA_Repository.TopicRepository;
 import com.edutech.backend.model.Topic;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+//Service layer is where we combine business logic and data access
+//Right now its just simple data pass-through with findAll and findById
 @Service
 public class TopicService {
 
-    private final List<Topic> topics = List.of(
-            new Topic("topic1", "Topic 1"),
-            new Topic("topic2", "Topic 2"),
-            new Topic("topic3", "Topic 3"),
-            new Topic("topic4", "Topic 4"),
-            new Topic("topic5", "Topic 5")
-    );
+    public final TopicRepository topicRepository;
 
-    public List<Topic> getAllTopics() {
-        return topics;
+    public TopicService(TopicRepository topicRepository) {
+        this.topicRepository = topicRepository;
     }
 
-    public Topic getTopicById(String id) {
-        for (Topic topic : topics) {
-            if (topic.getId().equals(id)) {
-                return topic;
-            }
-        }
-        return null;
+    public List<Topic> getAllTopics() {
+        return topicRepository.findAll();
+    }
+
+    public Topic getTopicById(int id) {
+        return topicRepository.findById(id).orElse(null);
     }
 }

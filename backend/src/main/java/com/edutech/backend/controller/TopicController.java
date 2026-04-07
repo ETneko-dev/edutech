@@ -24,7 +24,7 @@ public class TopicController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Topic> getTopicById(@PathVariable String id) {
+    public ResponseEntity<Topic> getTopicById(@PathVariable int id) {
         Topic topic = topicService.getTopicById(id);
         if (topic == null) {
             return ResponseEntity.notFound().build();
