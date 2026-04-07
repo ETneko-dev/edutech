@@ -1,0 +1,33 @@
+*{
+    font-family: Lexend;
+    text-decoration: none;
+}
+.lexend-<uniquifier> {
+    font-family: "Lexend", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: <weight>;
+    font-style: normal;
+}
+
+/* sets a default color */
+/*
+:root {
+    --topic-color: #333333;
+}
+*/
+
+/* Use the variable on whatever elements you want to change */
+/*
+body {
+    border-top: 10px solid var(--topic-color);
+}
+
+#topicName {
+    color: var(--topic-color);
+}
+
+.quizButton {
+    background-color: var(--theme-color);
+}
+
+ */

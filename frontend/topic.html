@@ -1,12 +1,39 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Topic</title>
+    <link rel="stylesheet" href="topic.css">
+    <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Chiron+Hei+HK:ital,wght@0,200..900;1,200..900&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-<h1 id="topic-name">Loading...</h1>
-<p>This is the page for this topic.</p>
+    <header>
+        <h1 id="topic-name">Loading...</h1>
+        <p>This is the page for this topic.</p>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span>Progress</span>
+                <span id="current-progress">0/10</span>  <!-- update in js -->
+            </div>
+            <div class="stat-item">
+                <span>Score</span>
+                <span id="current-score">0</span>
+            </div>
+        </div>
+    </header>
+    <main id="quiz-container">
+        <div id="question-text">Preparing your questions...</div>
+
+        <div id="options-container">
+            <button class="quizButton">Option A</button>
+            <button class="quizButton">Option B</button>
+            <button class="quizButton">Option C</button>
+            <button class="quizButton">Option D</button>
+        </div>
+    </main>
+
 <a href="index.html">Back to Home</a>
 
 <script src="./js/topic.js"></script>
