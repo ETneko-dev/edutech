@@ -29,6 +29,10 @@ public class Question {
     @Column
     private String answer;
 
+    //no args constructor required by JPA:
+    protected Question() {
+    }
+
     //constructor:
     public Question(int id, Topic topic, String question_text, String option_A, String option_B, String option_C, String option_D, String answer) {
         this.id = id;
