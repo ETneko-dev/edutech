@@ -1,33 +1,131 @@
 *{
     font-family: Lexend;
     text-decoration: none;
+    box-sizing: border-box;
+
+    /* avoid browser setting margins automatically */
+    margin: 0;
+    padding: 0;
+
 }
+/* imported font */
 .lexend-<uniquifier> {
     font-family: "Lexend", sans-serif;
     font-optical-sizing: auto;
     font-weight: <weight>;
     font-style: normal;
 }
-
-/* sets a default color */
-/*
-:root {
-    --topic-color: #333333;
+body{
+    background-color: #acfbe5;
+    color: #252525;
+    display: flex;   /* put elements in horizontal */
+    flex-direction: column;  /* put elements in vertical */
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
 }
-*/
-
-/* Use the variable on whatever elements you want to change */
-/*
-body {
-    border-top: 10px solid var(--topic-color);
+header {
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 600px;
+}
+#topic-name {
+    font-size: 2.5rem;  /* rem allows scaling the text size up using browser */
+    color: #2d3436;
+    margin-bottom: 10px;
 }
 
-#topicName {
-    color: var(--topic-color);
+.stats-bar {
+    display: flex;
+    justify-content: space-around;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    margin-top: 20px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+}
+
+.stat-item span:first-child {  /* applies to <span>Progress</span> */
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #236c5a;
+    margin-bottom: 5px;
+}
+
+#current-progress, #current-score {
+    font-size: 1.2rem;
+    color: #002c23;
+}
+
+#quiz-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 600px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+
+#question-text {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+#options-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
 }
 
 .quizButton {
-    background-color: var(--theme-color);
+    background-color: #ffffff;
+    border: 2px solid #dfe6e9;
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-family: 'Lexend', sans-serif;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
- */
+.quizButton:hover {
+    background-color: #ffffff;
+    border-color: #008177;
+    transform: translateY(-2px);  /* -2px: move the element */
+}
+
+.quizButton:active {   /* push button effect */
+    transform: translateY(2px);
+    background-color: #555555;
+}
+
+.quizButton.is-selected {
+    background-color: #555555 !important;
+    color: white;
+    transform: scale(1.02);
+    border-color: #333333;
+}
+
+/* Back to home link */
+a[href="index.html"] {
+    text-decoration: none;
+    color: #636e72;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: color 0.2s;
+}
+
+a[href="index.html"]:hover {
+    color: #16493b;
+}

@@ -31,4 +31,15 @@ async function loadTopic() {
   }
 }
 
+// button click effect
+const buttons = document.querySelectorAll('.quizButton');
+
+buttons.forEach(button => {
+  button.addEventListener('click', function() {
+    buttons.forEach(btn => btn.classList.remove('is-selected'));
+
+    this.classList.add('is-selected');
+  });
+});
+
 loadTopic();
