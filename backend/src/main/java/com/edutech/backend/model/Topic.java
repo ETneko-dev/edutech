@@ -10,14 +10,17 @@ public class Topic {
 
     private String name;
 
+    //no args constructor required by JPA:
     protected Topic() {
     }
 
+    //constructor:
     public Topic(int id, String name){
         this.id = id;
         this.name = name;
     }
 
+    //getters:
     public int getId() {
         return id;
     }
