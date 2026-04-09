@@ -4,9 +4,19 @@ Backend:
     its classes work currently.
     - Add more data to our current h2 database
     - Eventually move to bigger database system like postgresql
+    - If time permits, make it so we save data when user is logged in
+    - We can save data like total score, or visited topics, or score on topics etc.
+    - Allow User to create username, stored by email, but also allow user to access
+    login via typing in user name.
+    - Manage user logging out and saving data
+    - Remember me option
 
 Frontend:
     - Add content to home page
     - Render topic pages differently, different styling.
-    - When Question API is up and working, get and display question
-     content for each topic page
+    - Display User account info at top of page
+    - Get and display question content for each topic page from Question api
+    - If user is logged in, when they visit login page it should show they are logged in
+    and show "logout" button
+    - "Show password"
+    - Explain wrong answers if user selects incorrect answer
