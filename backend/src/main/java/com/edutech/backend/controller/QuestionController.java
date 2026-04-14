@@ -19,6 +19,7 @@ public class QuestionController {
 
     @GetMapping("/{topicId}")
     public ResponseEntity<List<Question>> getQuestionsByTopic(@PathVariable Integer topicId) {
+        //returns 10 randomized questions belonging to topicId
         List<Question> questions = questionService.findQuestionsByTopicId(topicId);
         return ResponseEntity.ok(questions);
     }

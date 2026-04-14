@@ -1,7 +1,5 @@
 Backend:
-    - Add Question Controller with API to expose question data
-    to frontend. Pipeline will be similar to how Topic and all
-    its classes work currently.
+    -
     - Add more data to our current h2 database
     - Eventually move to bigger database system like postgresql
     - If time permits, make it so we save data when user is logged in

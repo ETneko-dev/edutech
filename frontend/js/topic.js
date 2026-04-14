@@ -80,12 +80,12 @@ function displayCurrentQuestion() {
   // score progress starts from 1
   // use the question_text value from the current question object(q.question_text)
   document.getElementById("question-text").textContent = q.question_text;
-  // replace curren-progress with 'currentIndex + 1'
+  // replace current-progress with 'currentIndex + 1'
   document.getElementById("current-progress").textContent = `${currentIndex + 1}/${allQuestions.length}`;
 
   // finds all element from html (quizButton)
   const buttons = document.querySelectorAll(".quizButton");
-  // read obtion_ABCD in q
+  // read option_ABCD in q
   const options = [q.option_A, q.option_B, q.option_C, q.option_D];
 
   // forEach goes through each item in buttons
