@@ -5,10 +5,11 @@ import jakarta.persistence.*;
 @Entity
 public class Score {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
     @Column(name = "mathTotalScore")
@@ -27,12 +28,14 @@ public class Score {
     private int sportsTotalScore;
 
     //no args constructor required by JPA:
-    protected Score(){
-
+    public Score() {
     }
 
-    //Constructor:
-    public Score(int id, User user, int mathTotalScore, int scienceTotalScore, int historyTotalScore, int musicTotalScore, int sportsTotalScore) {
+    public Score(User user) {
+        this.user = user;
+    }
+
+    public Score(Long id, User user, int mathTotalScore, int scienceTotalScore, int historyTotalScore, int musicTotalScore, int sportsTotalScore) {
         this.id = id;
         this.user = user;
         this.mathTotalScore = mathTotalScore;
@@ -42,13 +45,13 @@ public class Score {
         this.sportsTotalScore = sportsTotalScore;
     }
 
-    //getters & setters:
+    //getters & setters
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -99,8 +102,6 @@ public class Score {
     public void setSportsTotalScore(int sportsTotalScore) {
         this.sportsTotalScore = sportsTotalScore;
     }
-
-    //toString:
 
     @Override
     public String toString() {

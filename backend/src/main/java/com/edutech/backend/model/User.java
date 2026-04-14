@@ -16,12 +16,16 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Score score;
+
     protected User() {
     }
 
-    public User(String email, String password) {
+    public User(String email, String password, Score score) {
         this.email = email;
         this.password = password;
+        this.score = score;
     }
 
     public Long getId(){
@@ -41,5 +45,13 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
     }
 }

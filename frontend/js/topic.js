@@ -5,6 +5,18 @@ function getTopicIdFromUrl() {
   return params.get("id");
 }
 
+// Map topicId to the score key returned by backend
+function getScoreKeyForTopic(topicId) {
+  const map = {
+    "1": "mathTotalScore",
+    "2": "scienceTotalScore",
+    "3": "historyTotalScore",
+    "4": "musicTotalScore",
+    "5": "sportsTotalScore",
+  };
+  return map[topicId] || null;
+}
+
 async function loadTopic() {
   const topicId = getTopicIdFromUrl();
   if (!topicId) {
@@ -31,16 +43,37 @@ async function loadTopic() {
   }
 }
 
+// Load saved score for logged-in user and display it
+async function loadSavedScore() {
+  const loggedInUser = sessionStorage.getItem("loggedInUser");
+  if (!loggedInUser) return;
+
+  const topicId = getTopicIdFromUrl();
+  const scoreKey = getScoreKeyForTopic(topicId);
+  if (!scoreKey) return;
+
+  try {
+    const response = await fetch(`${API_BASE}/score?email=${encodeURIComponent(loggedInUser)}`);
+    if (response.ok) {
+      const scores = await response.json();
+      const savedScore = scores[scoreKey] || 0;
+      document.getElementById("current-score").textContent = savedScore;
+      // Initialize the local score variable with the saved value
+      score = savedScore;
+    }
+  } catch (error) {
+    console.error("Could not load saved score:", error);
+  }
+}
+
 // button click effect
 const buttons = document.querySelectorAll(".quizButton");
-// btn is declared as the parameter of the arrow function.
 buttons.forEach((btn) => {
   btn.classList.remove("is-selected");
 });
 buttons.forEach(button => {
   button.addEventListener('click', function() {
     buttons.forEach(btn => btn.classList.remove('is-selected'));
-
     this.classList.add('is-selected');
   });
 });
@@ -62,7 +95,6 @@ async function getQuestions() {
 
     allQuestions = await response.json();
 
-    // check if array has items > 0
     if (allQuestions.length > 0) {
       displayCurrentQuestion();
     } else {
@@ -72,37 +104,26 @@ async function getQuestions() {
     console.error("Error:", error);
   }
 }
-// bring questions for each topic
+
 function displayCurrentQuestion() {
-  // defines current question
   const q = allQuestions[currentIndex];
 
-  // score progress starts from 1
-  // use the question_text value from the current question object(q.question_text)
   document.getElementById("question-text").textContent = q.question_text;
-  // replace current-progress with 'currentIndex + 1'
   document.getElementById("current-progress").textContent = `${currentIndex + 1}/${allQuestions.length}`;
 
-  // finds all element from html (quizButton)
   const buttons = document.querySelectorAll(".quizButton");
-  // read option_ABCD in q
   const options = [q.option_A, q.option_B, q.option_C, q.option_D];
 
-  // forEach goes through each item in buttons
-  // for each item, it puts that current item into the variable btn
   buttons.forEach((btn) => {
     btn.classList.remove("is-selected");
   });
 
   buttons.forEach((btn, index) => {
     btn.textContent = options[index];
-
-    // set the button text to the matching option
-    // call function when button is clicked
     btn.onclick = () => handleAnswer(options[index], q.answer);
   });
 }
-//
+
 function handleAnswer(selectedAnswer, correctAnswer) {
   if (selectedAnswer === correctAnswer) {
     score += 10;
@@ -112,19 +133,67 @@ function handleAnswer(selectedAnswer, correctAnswer) {
     alert("Wrong! The correct answer was: " + correctAnswer);
   }
 
-  // Move to next question automatically after they click
   nextQuestion();
 }
 
-function nextQuestion() {
+async function nextQuestion() {
   if (currentIndex < allQuestions.length - 1) {
     currentIndex++;
     displayCurrentQuestion();
   } else {
+    // Quiz finished — save score if logged in
+    await saveScore();
     alert(`Quiz Finished! Final Score: ${score}`);
     window.location.href = "index.html";
   }
 }
 
+async function saveScore() {
+  const loggedInUser = sessionStorage.getItem("loggedInUser");
+  if (!loggedInUser) return; // not logged in, don't save
+
+  const topicId = getTopicIdFromUrl();
+  if (!topicId) return;
+
+  // Send only the points earned this quiz session (10 per correct answer)
+  // The backend ADDS this to the existing total
+  const pointsEarned = score - (await getExistingScore());
+
+  try {
+    await fetch(`${API_BASE}/score/update`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: loggedInUser,
+        topicId: parseInt(topicId),
+        score: pointsEarned,
+      }),
+    });
+  } catch (error) {
+    console.error("Failed to save score:", error);
+  }
+}
+
+async function getExistingScore() {
+  const loggedInUser = sessionStorage.getItem("loggedInUser");
+  if (!loggedInUser) return 0;
+
+  const topicId = getTopicIdFromUrl();
+  const scoreKey = getScoreKeyForTopic(topicId);
+  if (!scoreKey) return 0;
+
+  try {
+    const response = await fetch(`${API_BASE}/score?email=${encodeURIComponent(loggedInUser)}`);
+    if (response.ok) {
+      const scores = await response.json();
+      return scores[scoreKey] || 0;
+    }
+  } catch (error) {
+    console.error("Could not fetch existing score:", error);
+  }
+  return 0;
+}
+
 loadTopic();
+loadSavedScore();
 getQuestions();

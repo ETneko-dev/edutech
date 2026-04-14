@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - EduTech</title>
+    <link rel="stylesheet" href="login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        .login-box {
+            height: auto;
+            min-height: 480px;
+        }
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .score-table th, .score-table td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 15px;
+        }
+        .score-table th {
+            color: #007154;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 13px;
+        }
+        .score-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+        }
+        .account-email {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+        .total-score {
+            text-align: right;
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 10px;
+            color: #007154;
+        }
+        .logout-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #555;
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-family: 'Lexend', sans-serif;
+            font-size: 15px;
+            cursor: pointer;
+            transition: .3s;
+        }
+        .logout-btn:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <div class="login-header">
+            <header>My Account</header>
+        </div>
+
+        <!-- Shown when NOT logged in -->
+        <div id="not-logged-in" style="display:none; text-align:center;">
+            <p style="margin-bottom: 20px; font-size: 16px; color: #555;">You are not logged in.</p>
+            <a href="login.html" style="
+                display: inline-block;
+                background: #007154;
+                color: white;
+                padding: 12px 30px;
+                border-radius: 15px;
+                font-size: 15px;
+                transition: .3s;
+            ">Login here</a>
+        </div>
+
+        <!-- Shown when logged in -->
+        <div id="logged-in" style="display:none;">
+            <p class="account-email">Logged in as: <strong id="user-email"></strong></p>
+
+            <table class="score-table">
+                <thead>
+                    <tr>
+                        <th>Topic</th>
+                        <th style="text-align:right;">Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td>Math</td><td id="score-math">0</td></tr>
+                    <tr><td>Science</td><td id="score-science">0</td></tr>
+                    <tr><td>History</td><td id="score-history">0</td></tr>
+                    <tr><td>Music</td><td id="score-music">0</td></tr>
+                    <tr><td>Sports</td><td id="score-sports">0</td></tr>
+                </tbody>
+            </table>
+
+            <div class="total-score">Total: <span id="score-total">0</span></div>
+
+            <button class="logout-btn" id="logout-btn">Logout</button>
+        </div>
+
+        <div class="back-to-home" style="margin-top: 20px;">
+            <a href="index.html">Back to Home</a>
+        </div>
+    </div>
+
+    <script src="./js/account.js"></script>
+</body>
+</html>

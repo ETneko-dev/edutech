@@ -1,6 +1,8 @@
 package com.edutech.backend.controller;
 
+import com.edutech.backend.model.Score;
 import com.edutech.backend.service.UserService;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
@@ -33,9 +35,10 @@ public class AuthController {
         }
 
         try {
-            userService.registerUser(email, password);
+            Score score = new Score();
+            userService.registerUser(email, password, score);
             return ResponseEntity.ok(Map.of("message", "Account created successfully"));
-        } catch (Exception e) {
+        } catch (DataIntegrityViolationException e) {
             return ResponseEntity.badRequest().body(Map.of("error", "Email already in use"));
         }
     }
