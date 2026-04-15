@@ -6,20 +6,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const submitBtn = document.getElementById("submit");
   submitBtn.addEventListener("click", async () => {
-    const email = document.querySelector('input[placeholder="Email"]').value;
+    const login = document.querySelector('input[placeholder="Email or Username"]').value;
     const password = document.querySelector('input[placeholder="Password"]').value;
 
     try {
       const response = await fetch(`${API_BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ login, password }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
         sessionStorage.setItem("loggedInUser", data.email);
+        sessionStorage.setItem("loggedInDisplayName", data.userName || data.email);
         document.getElementById("login-message").textContent = "Login successful!";
         setTimeout(() => (window.location.href = "index.html"), 1000);
       } else {

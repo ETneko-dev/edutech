@@ -27,7 +27,8 @@ public class Score {
     @Column(name = "sportsTotalScore")
     private int sportsTotalScore;
 
-    //@Column(name = "totalScore")
+    @Column(name = "totalScore")
+    private int totalScore;
 
     //no args constructor required by JPA:
     public Score() {
@@ -48,7 +49,6 @@ public class Score {
     }
 
     //getters & setters
-
     public Long getId() {
         return id;
     }
@@ -104,6 +104,16 @@ public class Score {
     public void setSportsTotalScore(int sportsTotalScore) {
         this.sportsTotalScore = sportsTotalScore;
     }
+
+    public int getTotalScore(){
+        return totalScore;
+    }
+
+    public void setTotalScore(){
+        this.totalScore = mathTotalScore + scienceTotalScore + historyTotalScore + musicTotalScore + sportsTotalScore;
+    }
+
+
 
     @Override
     public String toString() {

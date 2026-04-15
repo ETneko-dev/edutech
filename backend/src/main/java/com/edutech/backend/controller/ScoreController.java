@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/score")
@@ -42,6 +43,17 @@ public class ScoreController {
         try {
             Map<String, Integer> scores = userService.getScores(email);
             return ResponseEntity.ok(scores);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
+    }
+
+    // GET /api/score/leaderboard
+    @GetMapping("/leaderboard")
+    public ResponseEntity<?> getLeaderboard() {
+        try {
+            List<Map<String, Object>> leaderboard = userService.getLeaderboard(10);
+            return ResponseEntity.ok(leaderboard);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }

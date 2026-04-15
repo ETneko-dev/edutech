@@ -7,8 +7,11 @@ import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -24,9 +27,10 @@ public class UserService implements UserDetailsService {
 
     //Called by spring security during login
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        User user = userRepository.findByEmail(login)
+                .or(() -> userRepository.findByUserName(login))
+                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + login));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
@@ -35,16 +39,21 @@ public class UserService implements UserDetailsService {
         );
     }
 
+    public User findByLoginIdentifier(String login) {
+        return userRepository.findByEmail(login)
+                .or(() -> userRepository.findByUserName(login))
+                .orElseThrow(() -> new RuntimeException("User not found: " + login));
+    }
+
     //Called by our signup endpoint
-    public User registerUser(String email, String rawPassword, Score score) {
-        User user = new User(email, passwordEncoder.encode(rawPassword), score);
+    public User registerUser(String email, String userName, String rawPassword, Score score) {
+        User user = new User(email, userName, passwordEncoder.encode(rawPassword), score);
         if (score != null) {
             score.setUser(user);
         }
         return userRepository.save(user);
     }
 
-    //Helper: get or create Score for a user
     private Score getOrCreateScore(User user) {
         Score score = user.getScore();
         if (score == null) {
@@ -89,5 +98,31 @@ public class UserService implements UserDetailsService {
         scores.put("musicTotalScore", score.getMusicTotalScore());
         scores.put("sportsTotalScore", score.getSportsTotalScore());
         return scores;
+    }
+
+    public List<Map<String, Object>> getLeaderboard(int limit) {
+        List<User> users = userRepository.findAll();
+        List<Map<String, Object>> rows = new ArrayList<>();
+
+        for (User user : users) {
+            Score score = getOrCreateScore(user);
+            int totalScore = score.getMathTotalScore()
+                    + score.getScienceTotalScore()
+                    + score.getHistoryTotalScore()
+                    + score.getMusicTotalScore()
+                    + score.getSportsTotalScore();
+
+            Map<String, Object> row = new HashMap<>();
+            row.put("userName", user.getUserName());
+            row.put("totalScore", totalScore);
+            rows.add(row);
+        }
+
+        rows.sort(Comparator.comparingInt(r -> -((Integer) r.get("totalScore"))));
+
+        if (rows.size() > limit) {
+            return rows.subList(0, limit);
+        }
+        return rows;
     }
 }

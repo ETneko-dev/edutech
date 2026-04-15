@@ -1,11 +1,11 @@
  package com.edutech.backend.controller;
 
 import com.edutech.backend.model.Score;
+import com.edutech.backend.model.User;
 import com.edutech.backend.service.UserService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,39 +24,50 @@ public class AuthController {
         this.authenticationManager = authenticationManager;
     }
 
-    // POST /api/auth/signup  { "email": "...", "password": "..." }
+    // POST /api/auth/signup  { "email": "...", "username": "...", "password": "..." }
     @PostMapping("/signup")
     public ResponseEntity<Map<String, String>> signup(@RequestBody Map<String, String> body) {
         String email = body.get("email");
         String password = body.get("password");
+        String userName = body.get("username");
 
-        if (email == null || password == null || email.isBlank() || password.isBlank()) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Email and password are required"));
+        if (email == null || userName == null || password == null
+                || email.isBlank() || userName.isBlank() || password.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email, username, and password are required"));
         }
 
         try {
             Score score = new Score();
-            userService.registerUser(email, password, score);
+            userService.registerUser(email, userName, password, score);
             return ResponseEntity.ok(Map.of("message", "Account created successfully"));
         } catch (DataIntegrityViolationException e) {
-            return ResponseEntity.badRequest().body(Map.of("error", "Email already in use"));
+            return ResponseEntity.badRequest().body(Map.of("error", "Email or username already in use"));
         }
     }
 
-    // POST /api/auth/login  { "email": "...", "password": "..." }
+    // POST /api/auth/login  { "login": "...", "password": "..." }
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> body) {
-        String email = body.get("email");
+        String login = body.get("login");
         String password = body.get("password");
 
+        if (login == null || password == null || login.isBlank() || password.isBlank()) {
+            return ResponseEntity.badRequest().body(Map.of("error", "Email/username and password are required"));
+        }
+
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(email, password)
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(login, password)
             );
-            // If we reach here, credentials are valid
-            return ResponseEntity.ok(Map.of("message", "Login successful", "email", email));
+            User user = userService.findByLoginIdentifier(login);
+
+            return ResponseEntity.ok(Map.of(
+                    "message", "Login successful",
+                    "email", user.getEmail(),
+                    "userName", user.getUserName()
+            ));
         } catch (AuthenticationException e) {
-            return ResponseEntity.status(401).body(Map.of("error", "Invalid email or password"));
+            return ResponseEntity.status(401).body(Map.of("error", "Invalid email/username or password"));
         }
     }
 }

@@ -14,6 +14,9 @@ public class User {
     private String email;
 
     @Column(nullable = false)
+    private String userName;
+
+    @Column(nullable = false)
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
@@ -22,8 +25,9 @@ public class User {
     protected User() {
     }
 
-    public User(String email, String password, Score score) {
+    public User(String email, String userName, String password, Score score) {
         this.email = email;
+        this.userName = userName;
         this.password = password;
         this.score = score;
     }
@@ -35,6 +39,7 @@ public class User {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email){
         this.email = email;
     }
@@ -53,5 +58,13 @@ public class User {
 
     public void setScore(Score score) {
         this.score = score;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }
