@@ -27,6 +27,8 @@ public class Score {
     @Column(name = "sportsTotalScore")
     private int sportsTotalScore;
 
+    //@Column(name = "totalScore")
+
     //no args constructor required by JPA:
     public Score() {
     }

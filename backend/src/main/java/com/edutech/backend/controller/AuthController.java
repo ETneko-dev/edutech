@@ -1,4 +1,4 @@
-package com.edutech.backend.controller;
+ package com.edutech.backend.controller;
 
 import com.edutech.backend.model.Score;
 import com.edutech.backend.service.UserService;

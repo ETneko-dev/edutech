@@ -87,6 +87,14 @@ header {
     gap: 12px;
 }
 
+.answer-feedback {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 4px;
+    margin-bottom: -4px;
+}
+
 .quizButton {
     background-color: #ffffff;
     border: 2px solid #dfe6e9;

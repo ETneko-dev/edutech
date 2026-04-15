@@ -57,9 +57,9 @@ async function loadSavedScore() {
     if (response.ok) {
       const scores = await response.json();
       const savedScore = scores[scoreKey] || 0;
-      document.getElementById("current-score").textContent = savedScore;
-      // Initialize the local score variable with the saved value
-      score = savedScore;
+      // Initialize the local score variable with 0
+      score = 0;
+      document.getElementById("current-score").textContent = score;
     }
   } catch (error) {
     console.error("Could not load saved score:", error);
@@ -116,24 +116,45 @@ function displayCurrentQuestion() {
 
   buttons.forEach((btn) => {
     btn.classList.remove("is-selected");
+    // Remove any previous feedback span
+    const oldFeedback = btn.parentElement.querySelector(".answer-feedback");
+    if (oldFeedback) oldFeedback.remove();
   });
 
   buttons.forEach((btn, index) => {
     btn.textContent = options[index];
-    btn.onclick = () => handleAnswer(options[index], q.answer);
+    btn.disabled = false;
+    btn.onclick = () => handleAnswer(btn, options[index], q.answer);
   });
 }
 
-function handleAnswer(selectedAnswer, correctAnswer) {
+function handleAnswer(clickedBtn, selectedAnswer, correctAnswer) {
+  const buttons = document.querySelectorAll(".quizButton");
+
+  // if already answered, ignore
+  if ([...buttons].every((btn) => btn.disabled)) return;
+
+  buttons.forEach((btn) => (btn.disabled = true));
+
+  // Create the feedback span
+  const feedback = document.createElement("span");
+  feedback.classList.add("answer-feedback");
+
   if (selectedAnswer === correctAnswer) {
     score += 10;
     document.getElementById("current-score").textContent = score;
-    alert("Correct!");
+    feedback.textContent = "Correct!";
+    feedback.style.color = "#1f9d55";
   } else {
-    alert("Wrong! The correct answer was: " + correctAnswer);
+    feedback.textContent = `Wrong! Correct answer was: ${correctAnswer}`;
+    feedback.style.color = "#d93025";
   }
 
-  nextQuestion();
+  clickedBtn.insertAdjacentElement("afterend", feedback);
+
+  setTimeout(() => {
+    nextQuestion();
+  }, 1400);
 }
 
 async function nextQuestion() {
@@ -157,7 +178,7 @@ async function saveScore() {
 
   // Send only the points earned this quiz session (10 per correct answer)
   // The backend ADDS this to the existing total
-  const pointsEarned = score - (await getExistingScore());
+  const pointsEarned = score;
 
   try {
     await fetch(`${API_BASE}/score/update`, {
