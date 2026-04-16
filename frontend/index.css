@@ -10,17 +10,23 @@
 }
 .navbar{
     background: #6effd6; padding-right: 15px; padding-left: 15px;
-
+    border-radius: 9px;
 }
-.navdiv{
+.navdiv {
     display: flex;
-    align-items: center;        /* centers everything */
-    justify-content: space-between; /* keeps Logo left and Menu right */
-    padding: 0 20px; /* adds space to logo and login */
+    align-items: center;
+}
+.nav-links {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .navdiv ul {
-    display: flex;
+
     flex-grow: 1;               /* Tells the menu to take up available space */
     justify-content: center;    /* Centers the links within that space */
     list-style: none;
@@ -55,6 +61,7 @@ li a{
 #topics {
     display: flex;
     flex-wrap: wrap;
+
 }
 .topics-frame {
     width: fit-content;
@@ -66,13 +73,16 @@ li a{
 }
 #topics {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 20px;
+    justify-content: center;
 }
 .topic-card {
-    width: 100%;
-    max-width: 500px;
+    text-align: center;
+    border: 3px solid #00dfbe;
+    border-radius: 16px;
+    padding: 20px;
+    width: 150px;
 }
 .nav-right {
     display: flex;
@@ -148,7 +158,9 @@ li a{
 
 .topics-section {
     flex: 1;
-    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .leaderboard-panel {
@@ -230,4 +242,53 @@ li a{
 .leaderboard-score {
     font-weight: 700;
     color: #007154;
+}
+/* about toggle */
+.about-menu {
+    position: relative;
+}
+
+.about-toggle {
+    background: transparent;
+    border: none;
+    color: black;
+    font-size: 20px;
+    cursor: pointer;
+    margin-right: 25px;
+}
+
+.about-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 160px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    padding: 8px 0;
+    z-index: 1000;
+    display: none;
+    list-style: none;
+}
+
+.about-menu:hover .about-dropdown {
+    display: block;
+}
+
+.about-dropdown li {
+    display: block;
+    margin: 0;
+}
+
+.about-dropdown a {
+    display: block;
+    padding: 10px 14px;
+    color: #222;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.about-dropdown a:hover {
+    background: #f2f2f2;
 }

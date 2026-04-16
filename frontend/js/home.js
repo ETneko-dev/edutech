@@ -1,5 +1,6 @@
 const API_BASE = "http://localhost:8080/api";
 
+/* get user profile */
 function renderNavbarAuth() {
   const navAuth = document.getElementById("nav-auth");
   const loggedInUser = sessionStorage.getItem("loggedInUser");
@@ -54,7 +55,7 @@ function renderNavbarAuth() {
     window.location.href = "./index.html";
   });
 }
-
+/* load topics */
 async function loadTopics() {
   const container = document.getElementById("topics");
   if (!container) return;
@@ -74,11 +75,12 @@ async function loadTopics() {
 
       const card = document.createElement("div");
       card.className = "topic-card";
+      /*
       card.style.border = "1px solid black";
       card.style.margin = "10px";
       card.style.padding = "20px";
       card.style.width = "200px";
-
+      */
       const title = document.createElement("h2");
       title.textContent = topic.name;
 
@@ -98,7 +100,7 @@ function medalForIndex(index) {
   if (index === 2) return "🥉";
   return "";
 }
-
+/* load leaderboard */
 async function loadLeaderboard() {
   const list = document.getElementById("leaderboard-list");
   if (!list) return;

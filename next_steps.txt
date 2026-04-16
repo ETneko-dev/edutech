@@ -3,7 +3,12 @@ Backend:
     - Improve Questions
 
 Frontend:
+
+    - not logged in: Check your streak -> user log in: streak table
+
     - Add content to home page
     - Potential: Render topic pages differently, different styling.
     - "Show password"
     - Potential: Explain wrong answers if user selects incorrect answer
+
+    - dropdown menu for navbar

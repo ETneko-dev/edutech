@@ -10,11 +10,16 @@
 <body>
     <nav class="navbar">
         <div class="navdiv">
-            <div class="logo"><a href="#">EduTech</a></div>
+            <div class="logo"><a href="./index.html">EduTech</a></div>
             <ul class="nav-links">
-                <li><a href="#">About</a></li>
-                <li><a href="#">Quiz</a></li>
-                <li><a href="#">Contact</a></li>
+                <li class="about-menu">
+                    <button type="button" class="about-toggle">About</button>
+                    <ul class="about-dropdown">
+                        <li><a href="./about.html">Overview</a></li>
+                        <li><a href="./team.html">Our team</a></li>
+                    </ul>
+                </li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
 
             <div id="nav-auth" class="nav-right">
@@ -36,7 +41,10 @@
         <section class="topics-section">
             <h1>EduTech Topics</h1>
             <div class="topics-frame">
-                <div id="topics"></div>
+                <div id="topics">
+                    <div class="topic-row first-row"></div>
+                    <div class="topic-row second-row"></div>
+                </div>
             </div>
         </section>
 
