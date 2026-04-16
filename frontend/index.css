@@ -85,6 +85,12 @@ li a{
     padding: 20px;
     width: 150px;
 }
+
+.topic-emojis {
+  font-size: 1.5rem;
+  margin-top: 8px;
+}
+
 .nav-right {
     display: flex;
     align-items: center;

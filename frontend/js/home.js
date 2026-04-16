@@ -63,6 +63,15 @@ async function loadTopics() {
 
   if (!container || !firstRow || !secondRow) return;
 
+  // Emoji mapping for each topic
+    const topicEmojis = {
+      "Math": "➖  📏  ➕",
+      "Science": "🧪 🔬 👩‍🔬",
+      "History": "📜  🏛️  📖",
+      "Music": "♫   🎸  🎹",
+      "Sports": "⚽  🏀  🏈"
+    };
+
   try {
     const response = await fetch(`${API_BASE}/topics`);
     if (!response.ok) {
@@ -85,7 +94,12 @@ async function loadTopics() {
       const title = document.createElement("h2");
       title.textContent = topic.name;
 
+      const emojis = document.createElement("div");
+      emojis.className = "topic-emojis";
+      emojis.textContent = topicEmojis[topic.name] || "";
+
       card.appendChild(title);
+      card.appendChild(emojis);
       link.appendChild(card);
 
       if (index < 2) {
