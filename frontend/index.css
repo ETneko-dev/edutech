@@ -27,15 +27,15 @@
 
 .navdiv ul {
 
-    flex-grow: 1;               /* Tells the menu to take up available space */
-    justify-content: center;    /* Centers the links within that space */
+    flex-grow: 1;
+    justify-content: center;
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
 .navdiv ul li {
-    margin: 20px   /* add space betwwen links to the top */
+    margin: 20px
 }
 .logo a{
     font-size: 40px; font-weight: 600; color: black;
@@ -56,13 +56,9 @@ li a{
     transition: background-color 0.3s ease;
 }
 #login-button:hover {
-    background-color: #004a3d; /* Darker shade for hover effect */
+    background-color: #004a3d;
 }
-#topics {
-    display: flex;
-    flex-wrap: wrap;
 
-}
 .topics-frame {
     width: fit-content;
     margin: 30px 0 30px 30px;
@@ -73,9 +69,14 @@ li a{
 }
 #topics {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 20px;
+    align-items: center;
+}
+.topic-row {
+    display: flex;
     justify-content: center;
+    gap: 20px;
 }
 .topic-card {
     text-align: center;

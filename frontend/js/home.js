@@ -58,35 +58,41 @@ function renderNavbarAuth() {
 /* load topics */
 async function loadTopics() {
   const container = document.getElementById("topics");
-  if (!container) return;
+  const firstRow = document.querySelector(".first-row");
+  const secondRow = document.querySelector(".second-row");
+
+  if (!container || !firstRow || !secondRow) return;
 
   try {
     const response = await fetch(`${API_BASE}/topics`);
     if (!response.ok) {
       throw new Error("Failed to load topics");
     }
-
     const topics = await response.json();
 
-    container.innerHTML = "";
-    topics.forEach((topic) => {
+    firstRow.innerHTML = "";
+    secondRow.innerHTML = "";
+
+    topics.forEach((topic, index) => {
+      if (index >= 5) return;
+
       const link = document.createElement("a");
       link.href = `./topic.html?id=${encodeURIComponent(topic.id)}`;
 
       const card = document.createElement("div");
       card.className = "topic-card";
-      /*
-      card.style.border = "1px solid black";
-      card.style.margin = "10px";
-      card.style.padding = "20px";
-      card.style.width = "200px";
-      */
+
       const title = document.createElement("h2");
       title.textContent = topic.name;
 
       card.appendChild(title);
       link.appendChild(card);
-      container.appendChild(link);
+
+      if (index < 2) {
+        firstRow.appendChild(link);
+      } else {
+        secondRow.appendChild(link);
+      }
     });
   } catch (error) {
     console.error("Could not load topics:", error);
